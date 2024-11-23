@@ -27,8 +27,37 @@ label{
     margin-top: 30px;
 }
 
+.btn-box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
 .btn{
     margin-top: 20px;
     width: 120px;
-    margin-left: 260px;
+    cursor: pointer;
+
+    border-radius: 5px;
+    color: #000;
+    background: #fff;
+    font-size: 15px;
+    text-align: center;
+    height: 22px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    outline: 0;
+    border: 0;
+    padding-top: 0px;
 }
+
+.r{
+    width: 150px;
+}
+
+a{
+    color: inherit;
+    text-decoration: none;
+    margin-top: 20px;
+}
+

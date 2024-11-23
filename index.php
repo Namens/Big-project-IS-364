@@ -24,7 +24,13 @@
             <label for="password_hash">Пароль</label>
             <input type="password" name="password_hash" class="inp" required><br>
 
-            <input type="submit" class="btn">
+            <div class="btn-box">
+                <a href="page/enter.php">Уже зарегестрирован</a> 
+                              
+                <button type="submit" class="btn r">Зарегестрироваться</button>
+                
+            </div>
+
 
         </form>
 

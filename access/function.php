@@ -18,13 +18,29 @@
             $result1 = mysqli_query( $_SERVER['link'], $create);
 
             if ($result1) {
-                echo "Пользователь успешно добавлен.";
+                echo "Пользователь добавлен";
             } else {
                 throw new Exception("Ошибка");
             }
         }
         catch (Exception $e) {
             echo "Пользователь уже есть!";
+        }
+    }
+
+    function login_user($email, $password_hash){
+        $query = "SELECT * FROM users WHERE email = '$email'";
+        $result = mysqli_query($_SERVER['link'], $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            if (password_verify($password_hash, $row['password'])) {
+                echo "Вы успешно вошли";
+            } else {
+                echo "Неверный пароль";
+            }
+        } else {
+            echo "Пользователь не найден";
         }
     }
 
