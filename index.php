@@ -11,20 +11,39 @@
     
     <main class="main">
 
-        <form method="POST" class="card">
+        <form method="POST" class="card" id='form'>
+
+            <h2>Регистрация</h2>
             
-            <label for="name">Имя</label>
-            <input type="text" name="name" class="inp" required><br>
+            <label for="username">Имя</label>
+            <input type="text" name="username" class="inp" required><br>
             
             <label for="email">Email</label>
             <input type="email" name="email" class="inp" required><br>
             
-            <label for="password">Пароль</label>
-            <input type="password" name="password" class="inp" required><br>
+            <label for="password_hash">Пароль</label>
+            <input type="password" name="password_hash" class="inp" required><br>
+
+            <input type="submit" class="btn">
 
         </form>
 
     </main>
 
+
 </body>
 </html>
+
+    <?php 
+        include 'access/function.php';
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = htmlspecialchars($_POST['username']);  
+            $email = htmlspecialchars($_POST['email']);  
+            $password_hash = htmlspecialchars($_POST['password_hash']);  
+        
+        
+            create_user($username, $email, $password_hash);
+        };
+
+    ?>
