@@ -18,7 +18,7 @@
             <label for="username">Имя</label>
             <input type="text" name="username" class="inp" required><br>
             
-            <label for="email">Email</label>
+            <label for="email">Эл.почта</label>
             <input type="email" name="email" class="inp" required><br>
             
             <label for="password_hash">Пароль</label>
