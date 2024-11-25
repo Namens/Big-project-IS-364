@@ -79,7 +79,7 @@
                 $row = mysqli_fetch_assoc($result);
                 if (password_verify($password_hash, $row['password'])) {
                     echo "Вы успешно вошли";
-                    header("Location: /page/main.php");
+                    header("Location: /page/adm-check.php");
                 } else {
                     echo "Неверный пароль";
                 }
@@ -91,6 +91,37 @@
         } catch (Exception $e) {
             echo "Ошибка, неправильные данные";
         }
+    }
+
+    function users_check() {
+        $query = "SELECT username, email, role, id FROM users";
+                $result = mysqli_query($_SERVER['link'], $query);
+                
+                
+                if (mysqli_num_rows($result) > 0) {
+                    
+                    echo "<h2>Список зарегистрированных пользователей</h2>";
+                    echo "<table border='1'>
+                            <tr>
+                                <th>ID</th>
+                                <th>Имя</th>
+                                <th>Эл.почта</th>
+                                <th>Роль</th>
+                            </tr>";
+                    
+                    
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<tr>
+                                <td>" . htmlspecialchars($row['id']) . "</td>
+                                <td>" . htmlspecialchars($row['username']) . "</td>
+                                <td>" . htmlspecialchars($row['email']) . "</td>
+                                <td>" . htmlspecialchars($row['role']) . "</td>
+                            </tr>";
+                    }
+                    echo "</table>";
+                } else {
+                    echo "Нет зарегистрированных пользователей.";
+                }
     }
 
 ?>
