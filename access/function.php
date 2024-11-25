@@ -52,41 +52,21 @@
     };
 
 
-    function Edit_user_data($user_id, $username, $email, $password_hash, $new_password_hash){
+    function Edit_user_data($old_email, $username, $email, $password_hash){
+        try{
+            // $user_id = "SELECT id FROM users WHERE email = '$old_email'";
+            // $user_id = mysqli_fetch_assoc(mysqli_query($_SERVER['link'], $user_id))['id'];
 
-        if (1){ 
-            $query = "SELECT * FROM users WHERE email = '$email_log'";
+            $query = "SELECT * FROM users WHERE email = '$old_email'";
             $result = mysqli_query($_SERVER['link'], $query);
-
-            $password = password_hash($password_hash, PASSWORD_DEFAULT);
-        
-            $update = "UPDATE users SET username = '$username', email = '$email', password = '$password' WHERE email = '$email_log'";
-            $result11 = mysqli_query( $_SERVER['link'], $update);
             
-            if ($result11) {
-                echo "Данные пользователя изменены";
-            } else {
-                throw new Exception("Ошибка");
-            }
-        } elseif (isset($email_reg)){
-            $query = "SELECT * FROM users WHERE email = '$email_reg'";
-            $result = mysqli_query($_SERVER['link'], $query);
-
-            $password = password_hash($password_hash, PASSWORD_DEFAULT);
-        
-            $update = "UPDATE users SET username = '$username', email = '$email', password = '$password' WHERE email = '$email_reg'";
-            $result11 = mysqli_query( $_SERVER['link'], $update);
-            
-            if ($result11) {
-                echo "Данные пользователя изменены";
-            } else {
-                throw new Exception("Ошибка");
-            }
-        } else {
-            echo "Нет";
-        }       
-
-
+            $hashed_password = password_hash($password_hash, PASSWORD_DEFAULT);
+            $update = "UPDATE users SET username = '$username', email = '$email', password = '$hashed_password' WHERE email = '$old_email'";
+            $update_result = mysqli_query($_SERVER['link'], $update);
+            return $update_result;
+        } catch (Exception $e) {
+            echo "Ошибка, этота Эл.почта заната";
+        }
     }
 
 ?>

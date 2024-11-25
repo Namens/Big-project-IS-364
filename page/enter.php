@@ -41,8 +41,8 @@
         include 'access/function.php';
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = htmlspecialchars($_POST['email']);  
-            $password_hash = htmlspecialchars($_POST['password_hash']);  
+            $email = $_POST['email'];  
+            $password_hash = $_POST['password_hash'];  
         
         
             login_user($email, $password_hash);

@@ -14,7 +14,7 @@
         <form method="POST" class="card" id='form'>
 
             <h2>Регистрация</h2>
-            
+
             <label for="username">Имя</label>
             <input type="text" name="username" class="inp" required><br>
             
@@ -44,9 +44,9 @@
         include 'access/function.php';
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = htmlspecialchars($_POST['username']);  
-            $email = htmlspecialchars($_POST['email']);  
-            $password_hash = htmlspecialchars($_POST['password_hash']);  
+            $username = $_POST['username'];  
+            $email = $_POST['email'];  
+            $password_hash = $_POST['password_hash'];  
         
         
             create_user($username, $email, $password_hash);
