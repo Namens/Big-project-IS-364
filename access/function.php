@@ -69,4 +69,28 @@
         }
     }
 
+    function Enter_admin($email, $password_hash){
+        try{
+
+            $query = "SELECT * FROM users WHERE email = '$email' AND role = 'admin'";
+            $result = mysqli_query($_SERVER['link'], $query);
+            
+            if (mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                if (password_verify($password_hash, $row['password'])) {
+                    echo "Вы успешно вошли";
+                    header("Location: /page/main.php");
+                } else {
+                    echo "Неверный пароль";
+                }
+            } else {
+                echo "Пользователь не найден";
+            }
+
+
+        } catch (Exception $e) {
+            echo "Ошибка, неправильные данные";
+        }
+    }
+
 ?>
