@@ -7,6 +7,25 @@
         }
         echo 'База данных подключена';
 
+    
+    function add_users_to_bd($email){
+        $query = "SELECT * FROM users WHERE email = '$email'";
+        $result = mysqli_query($_SERVER['link'], $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result); 
+            $value_id = $row['id'];
+
+            $query_check = "SELECT * FROM posts WHERE user_id = '$value_id'";
+            $result_check = mysqli_query($_SERVER['link'], $query_check);
+
+            if (mysqli_num_rows($result_check) === 0) {
+                $query_add = "INSERT INTO posts (user_id) VALUES ('$value_id')";
+                $result_add = mysqli_query($_SERVER['link'], $query_add);
+            }
+        };
+    }
+
 
     function create_user ($username, $email, $password_hash){
         try{
@@ -124,10 +143,6 @@
                     echo "Нет зарегистрированных пользователей.";
                 }
     }
-
-    // function Reset_password($email, $token) {
-
-    // }
 
     function T_password($email, $new_password) {
         $token = bin2hex(random_bytes(8));

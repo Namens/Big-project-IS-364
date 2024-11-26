@@ -50,6 +50,7 @@
         
         
             create_user($username, $email, $password_hash);
+            add_users_to_bd($email);
         };
 
     ?>

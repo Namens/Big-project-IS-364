@@ -56,8 +56,8 @@
             $password_hash = $_POST['password_hash'];  
         
         
+            add_users_to_bd($email);
             login_user($email, $password_hash);
-
         };
 
     ?>
