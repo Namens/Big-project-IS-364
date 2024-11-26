@@ -18,7 +18,7 @@
         <input type="text" name="title_post" class="inp" required><br>
         
         <label for="text_post">Содержание поста</label>
-        <input type="email" name="text_post" class="inp" required><br>
+        <input type="text" name="text_post" class="inp" required><br>
         
         <div class="btn-box">
             <a href="#">Назад</a> 

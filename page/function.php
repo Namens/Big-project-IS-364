@@ -40,7 +40,14 @@
 
             if ($result1) {
                 echo "Пользователь добавлен";
-                header("Location: /page/main.php");            
+                
+                $user_id_query_reg = "SELECT id FROM users WHERE email = '$email'";
+                $user_id_result_reg = mysqli_fetch_assoc(mysqli_query($_SERVER['link'], $user_id_query_reg))['id'];
+                $_SESSION['user_id_result_reg'] = $user_id_result_reg;
+                
+                // header("Location: /page/main.php");
+                header("Location: /page/post.php");
+
             } else {
                 throw new Exception("Ошибка");
             }
@@ -60,7 +67,16 @@
             $row = mysqli_fetch_assoc($result);
             if (password_verify($password_hash, $row['password'])) {
                 echo "Вы успешно вошли";
-                header("Location: /page/main.php");
+                
+                $user_id_query_log = "SELECT id FROM users WHERE email = '$email'";
+                $user_id_result_log = mysqli_fetch_assoc(mysqli_query($_SERVER['link'], $user_id_query_log))['id'];
+                $_SESSION['user_id_result_log'] = $user_id_result_log;
+                
+                // header("Location: /page/main.php");
+                header("Location: /page/post.php");
+
+
+
             } else {
                 echo "Неверный пароль";
             }
@@ -74,9 +90,6 @@
 
     function Edit_user_data($old_email, $username, $email, $password_hash){
         try{
-            // $user_id = "SELECT id FROM users WHERE email = '$old_email'";
-            // $user_id = mysqli_fetch_assoc(mysqli_query($_SERVER['link'], $user_id))['id'];
-
             $query = "SELECT * FROM users WHERE email = '$old_email'";
             $result = mysqli_query($_SERVER['link'], $query);
             
@@ -85,7 +98,7 @@
             $update_result = mysqli_query($_SERVER['link'], $update);
             return $update_result;
         } catch (Exception $e) {
-            echo "Ошибка, этота Эл.почта заната";
+            echo "Ошибка, эта Эл.почта заната";
         }
     }
 
@@ -169,5 +182,31 @@
 
 
     }
+
+    function start_post($title_post, $text_post){
+        $user_id = null;
+
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+        } else {
+            if (isset($_SESSION['user_id_result_reg'])) {
+                $user_id = $_SESSION['user_id_result_reg'];
+            } elseif (isset($_SESSION['user_id_result_log'])) {
+                $user_id = $_SESSION['user_id_result_log'];
+            }
+        }
+            if ($user_id !== null) {
+                $created_at = date('Y-m-d H:i:s');
+
+                $query_post = "UPDATE posts SET title = '$title_post', content = '$text_post', created_at = '$created_at' WHERE user_id = '$user_id'";
+                $result_post = mysqli_query($_SERVER['link'], $query_post);
+                
+                // header("Location: /page/main.php");
+                echo " Пост успешно создан";
+            }
+
+
+    }
+
 
 ?>
