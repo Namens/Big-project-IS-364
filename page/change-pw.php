@@ -24,7 +24,7 @@
 </html>
 
 <?php
-            include 'access/function.php';
+        include 'function.php';
         
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $new_password = $_POST['new_password'];

@@ -38,7 +38,7 @@
 </html>
 
 <?php 
-        include 'access/function.php';
+        include 'function.php';
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'];

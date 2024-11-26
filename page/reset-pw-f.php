@@ -1,47 +1,17 @@
 
 <?php
-    include 'access/function.php';
+        include 'function.php';
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email']) && $_POST['new_password']) {
-        $email = $_POST['email'];
-        $new_password = $_POST['new_password'];
-
-
-        $token = bin2hex(random_bytes(8));
-        $_SESSION['token'] = $token;
-        
-        Reset_password($email, $token);
-
-        $code = substr($token, 0, 6);
-        $_SESSION['code'] = $code;
-        $_SESSION['start_time'] = time();
-
-        echo "<h3>Your code: $code</h3>";
-        echo '<form method="post" action="">
-                <input type="text" name="input_code" placeholder="Enter code" required>
-                <button type="submit" name="submit_code">Submit</button>
-            </form>';
-    }
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_code'])) {
-        $input_code = $_POST['input_code'];
-        $email = $_POST['email'];
-        $new_password = $_POST['new_password'];
-        $current_time = time();
-        $start_time = $_SESSION['start_time'];
-        $elapsed_time = $current_time - $start_time;
-
-        if ($input_code === $_SESSION['code'] && $elapsed_time <= 10) {
-            // echo " Успешно";
-            // header("Location: change-pw.php");
-            $update = "UPDATE users SET password = '$new_password' WHERE email = '$email'";
-            $update_result = mysqli_query($_SERVER['link'], $update);
-            echo "Пароль изменен";
-
-        } else {
-            echo " Время использование токена вышло или неправильный код";
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST['email']) && isset($_POST['new_password']) && !isset($_POST['submit_next'])) {
+                $email = $_POST['email'];
+                $new_password = $_POST['new_password'];
+                $_SESSION['new_password'] = $new_password;
+                T_password($email, $new_password);
+            } 
+            
         }
-    }
+
 ?>
 
 
@@ -62,19 +32,48 @@
 
 
         <label for="email">Эл.почта</label>
-        <input type="email" name="email" class="inp"><br>
+        <input type="email" name="email" class="inp" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>"><br>
         
         <label for="new_password">Новый пароль</label>
-        <input type="text" name="new_password" class="inp"><br>
-
+        <input type="text" name="new_password" class="inp" value="<?php echo isset($_POST['new_password']) ? htmlspecialchars($_POST['new_password']) : ''; ?>"><br>
         <button type="submit" class="btn" name="submit">Готово</button>
+
+        <label for="new_password">Шести значный код</label>
+        <input type="text" name="input_code" class="inp">
+        <button type="submit" class="btn" name="submit_next">Да</button>
+
+        <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if(isset($_POST['submit_next'])){
+                    $email = $_POST['email'];
+
+
+                    $input_code = $_POST['input_code'];             
+                    $current_time = time();
+                    $start_time = $_SESSION['start_time'];
+                    $elapsed_time = $current_time - $start_time;
+                            
+                    $hach_pw = password_hash($_SESSION['new_password'], PASSWORD_DEFAULT);
+                                
+                    if ($input_code === $_SESSION['code'] && $elapsed_time <= 10) {
+                        $update = "UPDATE users SET password = '$hach_pw' WHERE email = '$email'";
+                        $update_result = mysqli_query($_SERVER['link'], $update);
+                        echo "Пароль изменен!";
+                        // header ("Locatio: ")
+                    } else {
+                        echo "Неверный код или время ожидания истекло";
+                    }
+                            
+                }
+            
+        }
+        ?>
 
 
         </form>
     </main>
 </body>
 </html>
-
 
 
 

@@ -15,10 +15,12 @@
             <h2>Админ панель</h2>
 
             <?php
-                include 'access/function.php';
+                include 'function.php';
  
                 users_check();
             ?>
+
+            <a href="enter.php" class="adm">Назад</a>
 
 
         </form>

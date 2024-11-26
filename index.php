@@ -41,7 +41,7 @@
 </html>
 
     <?php 
-        include 'access/function.php';
+        include 'page/function.php';
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];  

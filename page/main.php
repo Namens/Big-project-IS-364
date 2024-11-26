@@ -40,7 +40,7 @@
 </html>
 
 <?php 
-        include 'access/function.php';
+        include 'function.php';
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $old_email = $_POST['old_email'];
