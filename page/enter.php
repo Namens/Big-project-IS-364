@@ -22,12 +22,20 @@
             <input type="password" name="password_hash" class="inp" required><br>
 
             <div class="btn-box">
-                <a href="/index.php">Не зарегестрирован</a>
+                <div class="box-up">
 
-                <a href="adm.php">Админ панель</a>
+                    <a href="/index.php">Не зарегестрирован</a>
+                    <button type="submit" class="btn">Войти</button>
+                </div>
+
+                <div class="box-down">
+
+                    <a href="adm.php" class="adm">Админ панель</a>
+                    
+                    <a href="reset-pw-f.php">Забыли пароль?</a>
+                </div>
 
 
-                <button type="submit" class="btn">Войти</button>
                 
             </div>
 

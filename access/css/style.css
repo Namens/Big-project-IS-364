@@ -30,8 +30,9 @@ label{
 .btn-box{
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: space-between;
-    gap: 30px;
+    gap: 10px;
 }
 
 .btn{
@@ -59,5 +60,20 @@ a{
     color: inherit;
     text-decoration: none;
     margin-top: 20px;
+}
+
+.box-up, .box-down{
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#Code-box{
+    display: none;
+    margin-top: 15px;
+    flex-direction: column;
+    align-items: center;
+
 }
 

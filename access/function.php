@@ -124,4 +124,20 @@
                 }
     }
 
+    function Reset_password($email, $token) {
+        $query = "SELECT id FROM users WHERE email = '$email'";
+        $result = mysqli_query($_SERVER['link'], $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result); 
+            $value_id = $row['id'];
+
+            $created_at = date('Y-m-d H:i:s');
+            $expired_at = date('Y-m-d H:i:s', strtotime('+10 second'));
+
+            $query_up = "INSERT INTO password_reset_tokens (user_id, token, created_at, expired_at) VALUES ('$value_id', '$token', '$created_at', '$expired_at')";
+            $result_up = mysqli_query($_SERVER['link'], $query_up);
+        }
+    }
+
 ?>
