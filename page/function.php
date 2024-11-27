@@ -46,7 +46,7 @@
                 $_SESSION['user_id_result_reg'] = $user_id_result_reg;
                 
                 // header("Location: /page/main.php");
-                header("Location: /page/post.php");
+                header("Location: /page/check-post.php");
 
             } else {
                 throw new Exception("Ошибка");
@@ -73,7 +73,7 @@
                 $_SESSION['user_id_result_log'] = $user_id_result_log;
                 
                 // header("Location: /page/main.php");
-                header("Location: /page/post.php");
+                header("Location: /page/check-post.php");
 
 
 
