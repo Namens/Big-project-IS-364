@@ -196,11 +196,24 @@
             }
         }
             if ($user_id !== null) {
+                
+                // Проверка на наличие постов у текущего пользователя
+                $query_check_post = "SELECT user_id FROM posts WHERE created_at IS NOT NULL";
+                $check_result = mysqli_query($_SERVER['link'], $query_check_post);
                 $created_at = date('Y-m-d H:i:s');
 
-                $query_post = "UPDATE posts SET title = '$title_post', content = '$text_post', created_at = '$created_at' WHERE user_id = '$user_id'";
-                $result_post = mysqli_query($_SERVER['link'], $query_post);
-                
+                if (mysqli_num_rows($check_result) > 0){
+
+
+                    $new_post_query = "INSERT INTO posts (user_id, title, content, created_at) VALUES ('$user_id', '$title_post', '$text_post', '$created_at')";
+                    $result_post = mysqli_query($_SERVER['link'], $new_post_query);
+
+                } else {
+                    
+                    $query_post = "UPDATE posts SET title = '$title_post', content = '$text_post', created_at = '$created_at' WHERE user_id = '$user_id'";
+                    $result_post = mysqli_query($_SERVER['link'], $query_post);
+                }
+
                 // header("Location: /page/main.php");
                 echo " Пост успешно создан";
             }
