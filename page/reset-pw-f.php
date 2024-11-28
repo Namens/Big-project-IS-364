@@ -58,8 +58,8 @@
                     if ($input_code === $_SESSION['code'] && $elapsed_time <= 10) {
                         $update = "UPDATE users SET password = '$hach_pw' WHERE email = '$email'";
                         $update_result = mysqli_query($_SERVER['link'], $update);
+                        header ("Location: /page/check-post.php");
                         echo "Пароль изменен!";
-                        // header ("Locatio: ")
                     } else {
                         echo "Неверный код или время ожидания истекло";
                     }
