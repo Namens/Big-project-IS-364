@@ -1,7 +1,7 @@
 <?php
     session_start();
-    // $_SERVER['link'] = mysqli_connect("192.168.199.13", "learn", "learn", "learn_is_64_shmachkov");
-    $_SERVER['link'] = mysqli_connect("151.248.115.10:3306", "root", "Kwuy1mSu4Y", "IS_364_Shmachkov");
+    $_SERVER['link'] = mysqli_connect("192.168.199.13", "learn", "learn", "learn_is_64_shmachkov");
+    // $_SERVER['link'] = mysqli_connect("151.248.115.10:3306", "root", "Kwuy1mSu4Y", "IS_364_Shmachkov");
         if(!$_SERVER['link']) {
             die("Connection failed: " . mysqli_connect_error());
         }
@@ -183,7 +183,7 @@
 
     }
 
-    function  ($title_post, $text_post){
+    function start_post ($title_post, $text_post){
         $user_id = null;
 
         if (isset($_SESSION['user_id'])) {
@@ -214,12 +214,71 @@
                     $result_post = mysqli_query($_SERVER['link'], $query_post);
                 }
 
-                // header("Location: /page/main.php");
+                header("Location: /page/user_post.php");
                 echo " Пост успешно создан";
             }
 
 
     }
 
+    function edit_post() {
+        if (isset($_POST['edit_post'])) {
+            $post_id = $_POST['edit_post'];
+    
+            $sql = "SELECT title, content FROM posts WHERE id = $post_id";
+            $result = mysqli_query($_SERVER['link'], $sql);
+    
+            if ($result && mysqli_num_rows($result) > 0) {
+                $post = mysqli_fetch_assoc($result);
+    
+                echo "
+                    </form>
+                    <form action='' method='post' class='edit-form'>
+                        <h3>Редактирование поста</h3>
+                        <input type='hidden' name='post_id' value='$post_id'>
+                        <label for='title' class='lab'>Заголовок:</label>
+                        <input type='text' name='title' id='title' value='" . htmlspecialchars($post['title'], ENT_QUOTES) . "' required>
+                        <label for='content' class='lab'>Текст:</label>
+                        <textarea name='content' id='content' required>" . htmlspecialchars($post['content'], ENT_QUOTES) . "</textarea>
+                        <button type='submit' name='save_post' class='btn m'>Сохранить</button>
+                    </form>
+                ";
+            } else {
+                echo "Ошибка: Пост не найден.";
+            }
+        }
+    
+        if (isset($_POST['save_post'])) {
+            $updated_at = date('Y-m-d H:i:s');
+
+            $post_id = $_POST['post_id'];
+            $title = mysqli_real_escape_string($_SERVER['link'], $_POST['title']);
+            $content = mysqli_real_escape_string($_SERVER['link'], $_POST['content']);
+    
+            $sql = "UPDATE posts SET title = '$title', content = '$content', updated_at = '$updated_at' WHERE id = $post_id";
+            if (mysqli_query($_SERVER['link'], $sql)) {
+                echo "Пост успешно обновлен."; 
+                header("Refresh: 1");
+
+            } else {
+                echo "Ошибка при обновлении поста: " . mysqli_error($_SERVER['link']);
+            }
+        }
+    }
+
+    function delete_post() {
+        if (isset($_POST['del_post'])) {
+                $post_id = $_POST['del_post'];
+        
+                $sql = "DELETE FROM posts WHERE id = $post_id";
+            if (mysqli_query($_SERVER['link'], $sql)) {
+                echo "Пост успешно удален.";
+                header("Refresh: 1");
+
+            } else {
+                echo "Ошибка при удалении поста: " . mysqli_error($_SERVER['link']);
+            }
+        }
+    }
 
 ?>

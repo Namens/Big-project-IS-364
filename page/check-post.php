@@ -25,7 +25,7 @@
         <?php
             include 'function.php';
 
-            $sql = "SELECT posts.id, posts.title, posts.content, posts.created_at, users.username
+            $sql = "SELECT posts.id, posts.title, posts.content, posts.created_at, posts.updated_at, users.username
             FROM posts
             JOIN users ON posts.user_id = users.id
             ORDER BY posts.created_at DESC";
@@ -37,12 +37,12 @@
 
                         echo "
                         <div class='card-box'>
-                        <div class='cards'>
-                        <h3>Заголовок: " . $row["title"] . "</h3>
-                        <p>Текст: " . $row["content"] . "</p>
-                        <p>Автор: " . $row["username"] . "</p>
-                        <p>Дата создания: " . $row["created_at"] . "</p>
-                        </div>
+                            <div class='cards'>
+                                <h3>Заголовок: " . $row["title"] . "</h3>
+                                <p>Текст: " . $row["content"] . "</p>
+                                <p>Автор: " . $row["username"] . "</p>
+                                <p>Дата создания: " . $row["created_at"] . "</p>
+                            </div>
                         </div>
                         ";
                     }

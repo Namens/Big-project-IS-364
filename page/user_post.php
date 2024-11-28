@@ -18,7 +18,11 @@
     </header>
 
     <main class="main-main">
-        <h2 class="title">Ваши посты</h2>
+        <div class="title-box">
+
+            <h2 class="title">Ваши посты</h2>
+            <a href="post.php" class="btn">Создание поста</a>
+        </div>
 
     <form action="" method="post" class="card">
         <?php
@@ -37,7 +41,7 @@
             }
             if ($user_id !== null) {
 
-                $sql = "SELECT posts.id, posts.title, posts.content, posts.created_at, users.username
+                $sql = "SELECT posts.id, posts.title, posts.content, posts.created_at,  posts.updated_at, users.username
                 FROM posts
                 JOIN users ON posts.user_id = users.id
                 WHERE posts.user_id = $user_id
@@ -56,6 +60,7 @@
                             <p>Текст: " . $row["content"] . "</p>
                             <p>Автор: " . $row["username"] . "</p>
                             <p>Дата создания: " . $row["created_at"] . "</p>
+                            <p>Дата обновления: " . $row["updated_at"] . "</p>
                             <button type='submit' name='del_post' value='". $row['id']. "'>Удалить</button>
                             <button type='submit' name='edit_post' value='". $row['id']. "'>Редактировать</button>
                             </div>
@@ -69,6 +74,7 @@
             }
 
             edit_post();
+            delete_post();
         ?>
     </form>
 

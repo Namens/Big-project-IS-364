@@ -21,7 +21,7 @@
         <input type="text" name="text_post" class="inp" required><br>
         
         <div class="btn-box">
-            <a href="#">Назад</a> 
+            <a href="user_post.php">Назад</a> 
                         
             <button type="submit" class="btn r">Создать</button>
             

@@ -78,6 +78,7 @@ a{
 
 }
 
+
 .card{
     display: flex;
     align-items: center;
@@ -91,7 +92,7 @@ a{
     color: #000;
     background: #fff;
     width: 400px;
-    height: 200px;
+    height: 230px;
 }
 
 .header{
@@ -125,4 +126,50 @@ a{
 
 .active{
     color: #c4c4c4;
+}
+
+.edit-form {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    width: 26%;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-form input,
+.edit-form textarea {
+    width: 70%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+}
+
+.edit-form button {
+    padding: 10px 15px;
+    background-color: #000;
+    color: #fff;
+}
+
+.lab{
+    color: #000;
+    margin: 0;
+}
+
+h3{
+    color: #000;
+}
+
+.m{
+    margin-top: 0;
+    line-height: 0;
+}
+
+.title-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
