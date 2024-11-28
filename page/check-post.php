@@ -10,6 +10,8 @@
     <header class="header">
 
         <nav class="nav">
+        <a href="check-post.php" class="item-menu active">Главная</a>
+
             <a href="user_post.php" class="item-menu">Ваши посты</a>
             <a href="reset-pw-f.php" class="item-menu">Ваш профиль</a>
         </nav>

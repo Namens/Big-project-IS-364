@@ -10,6 +10,7 @@
     <header class="header">
 
         <nav class="nav">
+            <a href="check-post.php" class="item-menu">Главная</a>
             <a href="post.php" class="item-menu active">Ваши посты</a>
             <a href="reset-pw-f.php" class="item-menu">Ваш профиль</a>
         </nav>
@@ -55,6 +56,8 @@
                             <p>Текст: " . $row["content"] . "</p>
                             <p>Автор: " . $row["username"] . "</p>
                             <p>Дата создания: " . $row["created_at"] . "</p>
+                            <button type='submit' name='del_post' value='". $row['id']. "'>Удалить</button>
+                            <button type='submit' name='edit_post' value='". $row['id']. "'>Редактировать</button>
                             </div>
                             </div>
                             ";
@@ -64,6 +67,8 @@
                     echo "Нет постов для отображения.";
                 }
             }
+
+            edit_post();
         ?>
     </form>
 
