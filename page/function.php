@@ -183,7 +183,7 @@
 
     }
 
-    function start_post($title_post, $text_post){
+    function  ($title_post, $text_post){
         $user_id = null;
 
         if (isset($_SESSION['user_id'])) {
