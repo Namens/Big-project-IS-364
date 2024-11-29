@@ -20,7 +20,7 @@
                 users_check();
             ?>
 
-            <a href="enter.php" class="adm">Назад</a>
+            <a href="adm_main_page.php" class="adm">Назад</a>
 
 
         </form>

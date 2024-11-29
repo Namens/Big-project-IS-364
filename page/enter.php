@@ -29,8 +29,6 @@
                 </div>
 
                 <div class="box-down">
-
-                    <a href="adm.php" class="adm">Админ панель</a>
                     
                     <a href="reset-pw-f.php">Забыли пароль?</a>
                 </div>
@@ -58,6 +56,7 @@
         
             add_users_to_bd($email);
             login_user($email, $password_hash);
+            Enter_admin($email, $password_hash);
         };
 
     ?>

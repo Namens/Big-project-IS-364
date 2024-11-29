@@ -112,7 +112,7 @@
                 $row = mysqli_fetch_assoc($result);
                 if (password_verify($password_hash, $row['password'])) {
                     echo "Вы успешно вошли";
-                    header("Location: /page/adm-check.php");
+                    header("Location: /page/adm_main_page.php");
                 } else {
                     echo "Неверный пароль";
                 }
@@ -278,6 +278,52 @@
             } else {
                 echo "Ошибка при удалении поста: " . mysqli_error($_SERVER['link']);
             }
+        }
+    }
+
+    function delete_adm(){
+        if (isset($_POST['delete'])) {
+
+            $post_id = $_POST['post_id'];
+            $delete_sql = "DELETE FROM posts WHERE id = $post_id";
+
+            if (mysqli_query($_SERVER['link'], $delete_sql)) {
+                echo "<p>Пост успешно удален.</p>";
+                header("Refresh:0"); 
+            } else {
+                echo "<p>Ошибка при удалении поста: " . mysqli_error($_SERVER['link']) . "</p>";
+            }
+        }
+    }
+
+    function edit_adm(){
+        if (isset($_POST['edit'])) {
+            $post_id = $_POST['post_id'];
+            header("Location: /page/edit_post_adm.php");
+        }
+
+        if (isset($_GET['id'])) {
+            $post_id = $_GET['id'];
+
+            $sql = "SELECT * FROM posts WHERE id = $post_id";
+            $result = mysqli_query($_SERVER['link'], $sql);
+            $post = mysqli_fetch_assoc($result);
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $title = $_POST['title'];
+                $content = $_POST['content'];
+
+                $update_sql = "UPDATE posts SET title = '$title', content = '$content', updated_at = NOW() WHERE id = $post_id";
+                if (mysqli_query($_SERVER['link'], $update_sql)) {
+                    echo "<p>Пост успешно обновлен.</p>";
+                    header("Location: check-post.php"); 
+                } else {
+                    echo "<p>Ошибка при обновлении поста: " . mysqli_error($_SERVER['link']) . "</p>";
+                }
+            }
+        } else {
+            echo "<p>Пост не найден.</p>";
+
         }
     }
 
