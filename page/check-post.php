@@ -14,6 +14,7 @@
 
             <a href="user_post.php" class="item-menu">Ваши посты</a>
             <a href="reset-pw-f.php" class="item-menu">Ваш профиль</a>
+            <a href="enter.php" name='exit' class="item-menu">Выход</a>
         </nav>
 
     </header>
@@ -50,6 +51,8 @@
             } else {
                 echo "Нет постов для отображения.";
             }
+
+            exit_log();
         ?>
     </form>
 

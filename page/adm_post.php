@@ -7,13 +7,15 @@
     <link rel="stylesheet" href="/access/css/style.css">
 </head>
 <body>
-    <header class="header">
+    <header class="header header-adm">
 
         <nav class="nav">
-            <a href="check-post.php" class="item-menu">Главная</a>
-            <a href="post.php" class="item-menu active">Ваши посты</a>
-            <a href="reset-pw-f.php" class="item-menu">Ваш профиль</a>
-            <a href="enter.php" name='exit' class="item-menu">Выход</a>
+        <a href="check-post.php" class="item-menu">Главная</a>
+        <a href="adm-check.php" class="item-menu">Все пользователи</a>
+        <a href="user_post.php" class="item-menu active">Ваши посты</a>
+        <a href="reset-pw-adm.php" class="item-menu">Ваш профиль</a>
+        <a href="enter.php" name='exit' class="item-menu">Выход</a>
+
         </nav>
 
     </header>

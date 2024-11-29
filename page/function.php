@@ -258,7 +258,7 @@
             $sql = "UPDATE posts SET title = '$title', content = '$content', updated_at = '$updated_at' WHERE id = $post_id";
             if (mysqli_query($_SERVER['link'], $sql)) {
                 echo "Пост успешно обновлен."; 
-                header("Refresh: 1");
+                header("Refresh: 0");
 
             } else {
                 echo "Ошибка при обновлении поста: " . mysqli_error($_SERVER['link']);
@@ -273,7 +273,7 @@
                 $sql = "DELETE FROM posts WHERE id = $post_id";
             if (mysqli_query($_SERVER['link'], $sql)) {
                 echo "Пост успешно удален.";
-                header("Refresh: 1");
+                header("Refresh: 0");
 
             } else {
                 echo "Ошибка при удалении поста: " . mysqli_error($_SERVER['link']);
@@ -289,7 +289,7 @@
 
             if (mysqli_query($_SERVER['link'], $delete_sql)) {
                 echo "<p>Пост успешно удален.</p>";
-                header("Refresh:0"); 
+                header("Refresh:1"); 
             } else {
                 echo "<p>Ошибка при удалении поста: " . mysqli_error($_SERVER['link']) . "</p>";
             }
@@ -299,32 +299,64 @@
     function edit_adm(){
         if (isset($_POST['edit'])) {
             $post_id = $_POST['post_id'];
-            header("Location: /page/edit_post_adm.php");
-        }
 
-        if (isset($_GET['id'])) {
-            $post_id = $_GET['id'];
-
-            $sql = "SELECT * FROM posts WHERE id = $post_id";
-            $result = mysqli_query($_SERVER['link'], $sql);
+            $sql = "SELECT title, content FROM posts WHERE id = ?";
+            $stmt = mysqli_prepare($_SERVER['link'], $sql);
+            mysqli_stmt_bind_param($stmt, 'i', $post_id);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
             $post = mysqli_fetch_assoc($result);
-
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $title = $_POST['title'];
-                $content = $_POST['content'];
-
-                $update_sql = "UPDATE posts SET title = '$title', content = '$content', updated_at = NOW() WHERE id = $post_id";
-                if (mysqli_query($_SERVER['link'], $update_sql)) {
-                    echo "<p>Пост успешно обновлен.</p>";
-                    header("Location: check-post.php"); 
-                } else {
-                    echo "<p>Ошибка при обновлении поста: " . mysqli_error($_SERVER['link']) . "</p>";
+            
+            echo "
+            <div id='editModal' class='modal'>
+                <div class='modal-content'>
+                    <span class='close'>&times;</span>
+                    <h2 class='title-t'>Редактировать пост</h2>
+                    <form method='post' action='' class='card edit'>
+                        <input type='hidden' name='post_id' value='$post_id'>
+                        <label for='title'>Заголовок</label>
+                        <input type='text' id='title' name='title' value='" . htmlspecialchars($post['title']) . "' required>
+                        <label for='content'>Текст</label>
+                        <textarea id='content' name='content' required class='textar'>" . htmlspecialchars($post['content']) . "</textarea>
+                        <button type='submit' name='update'>Сохранить изменения</button>
+                    </form>
+                </div>
+            </div>
+            <script>
+                var modal = document.getElementById('editModal');
+                var span = document.getElementsByClassName('close')[0];
+                modal.style.display = 'block';
+                span.onclick = function() {
+                    modal.style.display = 'none';
                 }
-            }
-        } else {
-            echo "<p>Пост не найден.</p>";
-
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = 'none';
+                    }
+                }
+            </script>
+            ";
+        }
+    
+        if (isset($_POST['update'])) {
+            $post_id = $_POST['post_id'];
+            $title = $_POST['title'];
+            $content = $_POST['content'];
+    
+            $sql = "UPDATE posts SET title = ?, content = ? WHERE id = ?";
+            $stmt = mysqli_prepare($_SERVER['link'], $sql);
+            mysqli_stmt_bind_param($stmt, 'ssi', $title, $content, $post_id);
+            mysqli_stmt_execute($stmt);
+    
+            header("Location: " . $_SERVER['PHP_SELF']);
         }
     }
+
+    function exit_log() {
+        if (isset($_POST['exti'])) {
+            session_unset();
+        }
+    }
+
 
 ?>

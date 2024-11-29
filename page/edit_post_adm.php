@@ -11,9 +11,9 @@
 
     <form method="post">
         <label for="title">Заголовок:</label>
-        <input type="text" name="title" id="title" value="<?php echo $post['title']; ?>" required>
+        <input type="text" name="title" id="title" required>
         <label for="content">Текст:</label>
-        <textarea name="content" id="content" required><?php echo $post['content']; ?></textarea>
+        <textarea name="content" id="content" required></textarea>
         <button type="submit">Сохранить изменения</button>
     </form>
     
